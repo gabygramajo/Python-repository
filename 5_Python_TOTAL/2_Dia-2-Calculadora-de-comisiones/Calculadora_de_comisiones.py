@@ -1,0 +1,5 @@
+print("### CALCULADORA DE COMISIONES ###")
+name = input("Nombre: ")
+total_sales = float(input("Total sales: $"))
+commission = round(total_sales * 0.13, 3)
+print(f"Calculando comisión...\n\n{name.capitalize()}, tu monto correspondiente es: ${commission}")
