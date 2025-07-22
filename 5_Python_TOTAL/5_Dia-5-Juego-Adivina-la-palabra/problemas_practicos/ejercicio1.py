@@ -1,12 +1,12 @@
 def devolver_distintos(num1, num2, num3):
     suma = num1 + num2 + num3
+    lista = [num1, num2, num3]
     numero = 0
     if suma > 15:
-        numero = max(num1, num2, num3)
+        numero = max(lista)
     elif suma < 10:
-        numero = min(num1, num2, num3)
+        numero = min(lista)
     else:
-        lista = [num1, num2, num3]
         lista.sort()
         numero = lista[1]
 
