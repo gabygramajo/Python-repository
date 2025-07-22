@@ -15,5 +15,20 @@ def contar_primos(numero):
 
     return f"Números primos encontrados: {len(primos)} : {primos}"
 
-print(contar_primos(1))
 print(contar_primos(31))
+
+# otra version pero mas eficiente
+def contar_primos2(numero):
+    primos = []
+    for num in range(2, numero + 1):
+        es_primo = True
+        for divisor in range(2, int(num ** 0.5) + 1):
+            if num % divisor == 0:
+                es_primo = False
+                break
+        if es_primo:
+            primos.append(num)
+
+    return f"Números primos encontrados: {len(primos)} : {primos}"
+
+print(contar_primos2(31))
