@@ -1,2 +1,2 @@
-# Python24
+# Python repository
 Python code repository
