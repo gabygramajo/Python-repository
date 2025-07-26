@@ -40,7 +40,7 @@ def iniciar_juego():
 
     while True:
 
-        print(f"La palabra oculta contiene {len(palabra_oculta)} letras:\n\t\t{"".join(palabra_oculta)}")
+        print(f'La palabra oculta contiene {len(palabra_oculta)} letras:\n\t\t{"".join(palabra_oculta)}')
         letra = input(f"\nTienes {vidas} vidas\nIngresa una letra (axit=0): ").upper()
 
         if not letra_valida(letra) and letra != "0":
