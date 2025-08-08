@@ -4,6 +4,35 @@ import platform
 
 base_path = Path(__file__).parent / "Recetas"
 
+def limpiar_consola():
+    os.system("cls" if platform.system() == "Windows" else "clear")
+
+def agregar_receta(categoria, nombre, contenido):
+    receta_path = base_path / categoria / nombre
+    if not receta_path.exists():
+        receta_path.touch()
+        receta_path.write_text(contenido)
+        print("Receta creada con éxito.")
+    else:
+        print("No se pudo crear la receta. La Receta ya existente")
+
+def crear_receta():
+    print("Categorías disponibles:")
+    categorias = obtener_categorias()
+
+    for categoria in categorias:
+        print(f'- {categoria}')
+
+    categoria = input("¿En qué categoría deseas guardar la receta?: ").strip()
+
+    if categoria not in categorias:
+        print("No existe la categoria deseada.")
+        return
+
+    nombre = input("¿Cuál es el nombre de la receta? ").strip()
+    contenido = input("Escribe el contenido de la receta:\n")
+    agregar_receta(categoria, nombre, contenido)
+
 def leer_receta(categoria, receta):
     receta_path = base_path / categoria / receta
 
@@ -12,17 +41,12 @@ def leer_receta(categoria, receta):
     else:
         print("La receta no existe.")
 
-
-
 def contar_recetas():
     contador_recetas = 0
     for file in base_path.rglob("*.txt"):
         contador_recetas += 1
 
     return contador_recetas
-
-def limpiar_consola():
-    os.system("cls" if platform.system() == "Windows" else "clear")
 
 def obtener_recetas(categoria):
     categoria_path = base_path / categoria
@@ -31,12 +55,12 @@ def obtener_recetas(categoria):
 
     return []
 
-def mostrar_categorias():
+def obtener_categorias():
     return [categoria.name for categoria in base_path.iterdir() if categoria.is_dir()]
 
 def seleccionar_categoria():
     print("Categorías disponibles: ")
-    categorias = mostrar_categorias()
+    categorias = obtener_categorias()
 
     for categoria in categorias:
         print(f'- {categoria}')
@@ -52,8 +76,6 @@ def seleccionar_categoria():
 
     else:
         print("La categoría no existe")
-
-
 
 def mostrar_menu():
     print("¿Qué deseas hacer?")
@@ -76,7 +98,8 @@ def ejecutar():
             seleccionar_categoria()
 
         elif opcion == "2":
-            pass
+            crear_receta()
+
         elif opcion == "3":
             pass
         elif opcion == "4":
@@ -86,9 +109,10 @@ def ejecutar():
         elif opcion == "6":
             print("\nFinalizando gestor de recetas...")
             break
-
         else:
             print("Opción no válida, intente nuevamente...")
+
+        limpiar_consola()
 
 # INICIAR PROGRAMA
 ejecutar()
