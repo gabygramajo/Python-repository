@@ -77,6 +77,69 @@ def seleccionar_categoria():
     else:
         print("La categoría no existe")
 
+def validar_crear_categoria(nombre):
+    nueva_categoria = base_path / nombre
+    nueva_categoria.mkdir(exist_ok=True)
+    return nueva_categoria.exists()
+
+def crear_categoria():
+    nombre = input("¿Qué nombre tendrá la nueva categoría? ").strip()
+    if validar_crear_categoria(nombre):
+        print("✅ Categoría creada.")
+    else:
+        print("❌ No se pudo crear la categoría.")
+    input("\nPresiona ENTER para continuar...")
+    limpiar_consola()
+
+def validar_eliminar_receta(categoria, receta):
+    receta_path = base_path / categoria / receta
+    if receta_path.exists():
+        receta_path.unlink()
+        return True
+    return False
+
+def eliminar_receta():
+    print("Categorías disponibles:")
+    categorias = obtener_categorias()
+    for cat in categorias:
+        print(f"- {cat}")
+    categoria = input("¿Qué categoría eliges? ").strip()
+    recetas = obtener_recetas(categoria)
+    if recetas:
+        print("\nRecetas disponibles:")
+        for r in recetas:
+            print(f"- {r}")
+        receta = input("¿Qué receta deseas eliminar? ").strip()
+        if validar_eliminar_receta(categoria, receta):
+            print("✅ Receta eliminada.")
+        else:
+            print("❌ No se pudo eliminar la receta.")
+    else:
+        print("❌ Categoría vacía o no existente.")
+    input("\nPresiona ENTER para continuar...")
+
+def validar_eliminar_categoria(categoria):
+    categoria_path = base_path / categoria
+    if categoria_path.exists() and categoria_path.is_dir():
+        for file in categoria_path.iterdir():
+            if file.is_file():
+                file.unlink()
+        categoria_path.rmdir()
+        return True
+    return False
+
+def eliminar_categoria():
+    print("Categorías disponibles:")
+    categorias = obtener_categorias()
+    for cat in categorias:
+        print(f"- {cat}")
+    categoria = input("¿Qué categoría deseas eliminar? ").strip()
+    if validar_eliminar_categoria(categoria):
+        print("✅ Categoría eliminada.")
+    else:
+        print("❌ No se pudo eliminar la categoría. Asegúrate de que esté vacía.")
+    input("\nPresiona ENTER para continuar...")
+
 def mostrar_menu():
     print("¿Qué deseas hacer?")
     print("[1] Leer una receta")
@@ -101,11 +164,14 @@ def ejecutar():
             crear_receta()
 
         elif opcion == "3":
-            pass
+            crear_categoria()
+
         elif opcion == "4":
-            pass
+            eliminar_categoria()
+
         elif opcion == "5":
-            pass
+            eliminar_categoria()
+
         elif opcion == "6":
             print("\nFinalizando gestor de recetas...")
             break
